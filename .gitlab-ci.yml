@@ -1,0 +1,8 @@
+include:
+  - project: 'quickstart-templates/ci-templates'
+    ref: master
+    file: 'docker-publish.yml'
+
+variables:
+  IMAGE_NAME_PREFIX: jackzzz92/
+  PUBLISH_TARGET: public
