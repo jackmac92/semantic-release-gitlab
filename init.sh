@@ -36,4 +36,4 @@ fi
 npx semantic-release
 
 git push "https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git" --tags
-git push "https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git" $CI_BRANCH_NAME
+git push "https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
