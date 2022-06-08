@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18
 
 RUN apt update -y && apt install -y git jq jo wget curl unzip python3-distutils python3-apt build-essential moreutils
 
