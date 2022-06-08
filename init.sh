@@ -33,7 +33,7 @@ if [[ -n ${NPM_TOKEN:-""} ]]; then
   echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >.npmrc
 fi
 
-npx semantic-release
+npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-""}
 
 git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
 git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
