@@ -35,5 +35,7 @@ fi
 
 npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-""}
 
-git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
-git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
+if [[ -n ${SEMANTIC_RELEASE__TRY_PUSH:-""} ]]; then
+  git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
+  git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
+fi
