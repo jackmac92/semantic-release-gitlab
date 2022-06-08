@@ -10,7 +10,7 @@ if [ -n "${DEBUG_RELEASE:-""}" ]; then
 fi
 
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
-  jq --null-input --argjson glabassets "${RELEASE_ASSETS:-"[\".\"]"}" '
+  jq --null-input --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
     plugins: [
       "@semantic-release/commit-analyzer",
