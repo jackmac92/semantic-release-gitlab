@@ -10,8 +10,8 @@ if [ -n "${DEBUG_RELEASE:-""}" ]; then
 fi
 
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
-  jq --null-input --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-"chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"}" --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   echo "Writing default config"
+  jq --null-input --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-"chore(release): \\\${nextRelease.version} [skip ci]\n\n\\\${nextRelease.notes}"}" --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
     plugins: [
       "@semantic-release/commit-analyzer",
