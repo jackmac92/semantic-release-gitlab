@@ -10,7 +10,7 @@ if [ -n "${DEBUG_RELEASE:-""}" ]; then
 fi
 
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
-  jq --null-input --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
+  jq --null-input --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-"chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"}" --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
     plugins: [
       "@semantic-release/commit-analyzer",
@@ -21,7 +21,11 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
           prepareCmd: "/home/releaser/scripts/semantic-release-prepare ${nextRelease.version}"
         }
       ],
-      ["@semantic-release/gitlab", { assets: $glabassets }]
+      ["@semantic-release/gitlab", { assets: $glabassets }],
+      ["@semantic-release/git", {
+        "assets": $glabassets,
+        "message": $commitmsg
+      }]
     ]
   }
   ' >.releaserc
