@@ -12,6 +12,9 @@ RUN python3 -m pip install toml
 
 
 COPY scripts ./scripts
+COPY gitGlobalIgnore gitGlobalIgnore
+RUN git config --global core.excludesfile gitGlobalIgnore
+
 USER root
 RUN find scripts -type f -exec chmod +x {} \;
 USER releaser:releaser
