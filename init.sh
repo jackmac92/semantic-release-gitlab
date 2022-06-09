@@ -9,6 +9,9 @@ if [ -n "${DEBUG_RELEASE:-""}" ]; then
   export DEBUG="semantic-release:*"
 fi
 
+git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
+
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Writing default config"
   jq --null-input \
@@ -45,6 +48,6 @@ set -x
 npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
 
 if [[ -n ${SEMANTIC_RELEASE__TRY_PUSH:-""} ]]; then
-  git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
-  git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
+  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
+  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
 fi
