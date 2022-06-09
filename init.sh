@@ -11,7 +11,9 @@ fi
 
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Writing default config"
-  jq --null-input --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-"chore(release): \\\${nextRelease.version} [skip ci]\n\n\\\${nextRelease.notes}"}" --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
+  jq --null-input \
+    --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-'chore(release): \${nextRelease.version} [skip ci]\n\n\${nextRelease.notes}'}" \
+    --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
     plugins: [
       "@semantic-release/commit-analyzer",
@@ -38,7 +40,9 @@ if [[ -n ${NPM_TOKEN:-""} ]]; then
   echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >.npmrc
 fi
 
-npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-""}
+set -x
+
+npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
 
 if [[ -n ${SEMANTIC_RELEASE__TRY_PUSH:-""} ]]; then
   git push "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
