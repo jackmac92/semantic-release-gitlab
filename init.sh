@@ -12,15 +12,23 @@ fi
 git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
 git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
 
+SEM_BASE_PLUGINS='"@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator"'
+
+if [[ -f "./package.json" ]]; then
+  SEM_BASE_PLUGINS="$SEM_BASE_PLUGINS"', "@semantic-release/npm"'
+fi
+
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
+  echo "Using the following semantic release plugins..."
+  echo "$SEM_BASE_PLUGINS"
   echo "Writing default config"
   jq --null-input \
     --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-'chore(release): \${nextRelease.version} [skip ci]\n\n\${nextRelease.notes}'}" \
+    --arg baseplugins "$SEM_BASE_PLUGINS" \
     --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
     plugins: [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
+      $baseplugins ,
       [
         "@semantic-release/exec",
         {
