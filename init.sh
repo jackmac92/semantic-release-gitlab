@@ -27,7 +27,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
     --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
-    plugins: $baseplugins + [
+    plugins: ($baseplugins + [
       [
         "@semantic-release/exec",
         {
@@ -38,7 +38,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
         "assets": $glabassets,
         "message": $commitmsg
       }]
-    ]
+    ])
   }
   ' | tee .releaserc
 fi
