@@ -27,7 +27,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
           prepareCmd: "/home/releaser/scripts/semantic-release-prepare ${nextRelease.version}"
         }
       ],
-      ["@semantic-release/gitlab", { assets: $glabassets }],
+
       ["@semantic-release/git", {
         "assets": $glabassets,
         "message": $commitmsg
@@ -36,7 +36,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   }
   ' | tee .releaserc
 fi
-
+# ["@semantic-release/gitlab", { assets: $glabassets }],
 cd "${DIRECTORY_TO_SEMANTIC_RELEASE:-"."}"
 
 if [[ -n ${NPM_TOKEN:-""} ]]; then
