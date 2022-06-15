@@ -14,4 +14,4 @@ if [[ -f "./info.rkt" ]]; then
 fi
 
 git add .
-git commit -m 'semantic release auto'
+git commit --allow-empty -m 'chore: semantic release auto'
