@@ -23,7 +23,6 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "$SEM_BASE_PLUGINS"
   echo "Writing default config"
   jq --null-input \
-    --arg commitmsg "${SEMANTIC_RELEAE__COMMIT_MESSAGE:-'chore(release): \${nextRelease.version} [skip ci]\n\n\${nextRelease.notes}'}" \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
     --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
   {
@@ -34,9 +33,8 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
           prepareCmd: "/home/releaser/scripts/semantic-release-prepare ${nextRelease.version}"
         }
       ],
-      ["@semantic-release/git", {
+      ["@semantic-release/gitlab", {
         "assets": $glabassets,
-        "message": $commitmsg
       }]
     ])
   }
