@@ -51,10 +51,6 @@ set -x
 
 npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
 
-if [[ -n ${SEMANTIC_RELEASE__TRY_PUSH_TAGS:-""} ]]; then
-  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
-fi
-
 if [[ -n ${SEMANTIC_RELEASE__TRY_PUSH_BRANCH:-""} ]]; then
   git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
 fi
