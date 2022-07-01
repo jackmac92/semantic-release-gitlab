@@ -13,7 +13,7 @@ if [[ -f "./info.rkt" ]]; then
   cat info.rkt | sed -e 's|(define version.*|(define version "'"$VERSION_JUST_CREATED"'")|' | sponge info.rkt
 fi
 
-if [[ -n ${SEMANTIC_RELEASE__COMMIT_DURING_PREPARE:-""} ]]; then
+if [[ -z ${SEMANTIC_RELEASE__NO_COMMIT_DURING_PREPARE:-""} ]]; then
   git add .
   git commit --allow-empty -m 'chore: semantic release auto'
 fi
