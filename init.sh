@@ -18,13 +18,18 @@ if [[ -f "./package.json" ]] && [[ -z ${NO_NPM_PLUGIN:-""} ]]; then
   SEM_BASE_PLUGINS="$SEM_BASE_PLUGINS \"@semantic-release/npm\""
 fi
 
+if [[ -f "./info.rkt" ]]; then
+  SEMANTIC_RELEASE__GIT_TAG_ASSETS="$(jq --argjson base "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" '$base + ["info.rkt"]')"
+fi
+
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
   echo "Writing default config"
   jq --null-input \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
-    --argjson glabassets "${SEMANTIC_RELEASE__RELEASE_ASSETS:-"[]"}" '
+    --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
+    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" '
   {
     plugins: ($baseplugins + [
       [
@@ -33,7 +38,11 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
           prepareCmd: "/home/releaser/scripts/semantic-release-prepare ${nextRelease.version}"
         }
       ],
-      "@semantic-release/git",
+      ["@semantic-release/git",
+        {
+          assets: $gitassets,
+        }
+      ],
       ["@semantic-release/gitlab", {
         "assets": $glabassets,
       }]
