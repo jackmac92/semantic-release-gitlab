@@ -41,6 +41,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
       ["@semantic-release/git",
         {
           assets: $gitassets,
+          "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
         }
       ],
       ["@semantic-release/gitlab", {
