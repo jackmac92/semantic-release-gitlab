@@ -19,4 +19,6 @@ if [[ -f "./info.rkt" ]]; then
   # tar czf $RACO_PKG_NAME.tar.gz $RACO_PKG_NAME
 fi
 
-git commit --allow-empty -m 'chore: semantic release auto'
+# https://gitlab.com/jackmac92/href-router-racket/-/jobs/2712456036
+# disabling below because it commits in detached head state, hopefully semantic release picks this up and autocommits it?
+# git commit --allow-empty -m 'chore: semantic release auto'
