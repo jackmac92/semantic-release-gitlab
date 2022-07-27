@@ -9,8 +9,9 @@ if [ -n "${DEBUG_RELEASE:-""}" ]; then
   export DEBUG="semantic-release:*"
 fi
 
-git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-git fetch "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" --tags
+if [ -n "${RELEASE_REWRITE_REMOTE:-""}" ]; then
+  git config --global url."https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.com/".insteadOf "git@gitlab.com:"
+fi
 
 SEM_BASE_PLUGINS="\"@semantic-release/commit-analyzer\" \"@semantic-release/git\" \"@semantic-release/release-notes-generator\""
 
@@ -30,11 +31,8 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   jq --null-input \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
     --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
-    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" \
-    --arg urlpath "${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" \
-    --arg gltoken "${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}" '
+    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" '
   {
-    repositoryUrl: "https://gitlab-ci-token:$gltoken@$urlpath",
     plugins: ($baseplugins + [
       [
         "@semantic-release/exec",
