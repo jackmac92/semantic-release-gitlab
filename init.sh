@@ -29,9 +29,11 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   jq --null-input \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
     --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
-    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" '
+    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" \
+    --arg urlpath "${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" \
+    --arg gltoken "${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}" '
   {
-    repositoryUrl: "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git",
+    repositoryUrl: "https://gitlab-ci-token:$gltoken@$urlpath",
     plugins: ($baseplugins + [
       [
         "@semantic-release/exec",
