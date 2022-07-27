@@ -31,6 +31,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
     --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
     --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" '
   {
+    repositoryUrl: "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git",
     plugins: ($baseplugins + [
       [
         "@semantic-release/exec",
@@ -61,7 +62,3 @@ fi
 set -x
 
 npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
-
-if [[ -n ${SEMANTIC_RELEASE__PUSH_BRANCH:-""} ]]; then
-  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
-fi
