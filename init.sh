@@ -26,6 +26,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
   echo "Writing default config"
+  set -x
   jq --null-input \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
     --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
@@ -53,6 +54,7 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
     ])
   }
   ' | tee .releaserc
+  set +x
 fi
 # ["@semantic-release/gitlab", { assets: $glabassets }],
 cd "${DIRECTORY_TO_SEMANTIC_RELEASE:-"."}"
