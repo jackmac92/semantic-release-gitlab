@@ -7,7 +7,6 @@ semantic-releaser:
   image: jackzzz92/semantic-release-gitlab
   variables:
     USE_DEFAULT_CONFIG: 1
-    CI_BRANCH_NAME: $CI_COMMIT_REF_NAME
   stage: publish
   only:
     - branches
