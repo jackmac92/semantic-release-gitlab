@@ -23,6 +23,10 @@ if [[ -f "./info.rkt" ]]; then
   SEMANTIC_RELEASE__GIT_TAG_ASSETS="$(jq --argjson base "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" '$base + ["info.rkt"]')"
 fi
 
+if [[ -f "./README.md" ]]; then
+  SEMANTIC_RELEASE__GIT_TAG_ASSETS="$(jq --argjson base "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" '$base + ["README.md"]')"
+fi
+
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
