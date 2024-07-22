@@ -27,6 +27,8 @@ if [[ -f "./README.md" ]]; then
   SEMANTIC_RELEASE__GIT_TAG_ASSETS="$(jq --null-input --argjson base "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" '$base + ["README.md"]')"
 fi
 
+cd "$(git root-directory)"
+
 if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
@@ -56,8 +58,8 @@ if [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   }
   ' | tee .releaserc
 fi
-# ["@semantic-release/gitlab", { assets: $glabassets }],
-cd "${DIRECTORY_TO_SEMANTIC_RELEASE:-"."}"
+# # ["@semantic-release/gitlab", { assets: $glabassets }],
+# cd "${DIRECTORY_TO_SEMANTIC_RELEASE:-"."}"
 
 if [[ -n ${NPM_TOKEN:-""} ]]; then
   echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >.npmrc
