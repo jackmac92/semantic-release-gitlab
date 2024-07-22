@@ -65,4 +65,4 @@ fi
 
 # set -x
 
-# npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
+npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
