@@ -67,4 +67,5 @@ fi
 
 # set -x
 
-npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
+echo "Running semantic release from $(pwd)"
+pnpm dlx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
