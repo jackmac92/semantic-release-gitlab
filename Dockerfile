@@ -5,10 +5,10 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-RUN pnpm install --global semantic-release @semantic-release/exec @semantic-release/git @semantic-release/gitlab @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
 RUN useradd releaser --home /home/releaser && mkdir /home/releaser && chown -R releaser:releaser /home/releaser
 USER releaser:releaser
 WORKDIR /home/releaser
+RUN pnpm install semantic-release @semantic-release/exec @semantic-release/git @semantic-release/gitlab @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
 
 COPY scripts ./scripts
 COPY gitGlobalIgnore gitGlobalIgnore
