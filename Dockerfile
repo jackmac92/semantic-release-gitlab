@@ -20,5 +20,4 @@ USER releaser:releaser
 ENV PATH="$PATH:/home/releaser/scripts"
 COPY init.sh ./
 
-USER root
 CMD ["bash", "/home/releaser/init.sh"]
