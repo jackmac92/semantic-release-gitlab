@@ -37,8 +37,7 @@ elif [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Writing default config"
   jq --null-input \
     --argjson baseplugins "$(jq -s -c <<<"$SEM_BASE_PLUGINS")" \
-    --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" \
-    --argjson glabassets "${SEMANTIC_RELEASE__GITLAB_RELEASE_ASSETS:-"[]"}" '
+    --argjson gitassets "${SEMANTIC_RELEASE__GIT_TAG_ASSETS:-"[]"}" '
   {
     plugins: ($baseplugins + [
       [
@@ -52,10 +51,7 @@ elif [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
           assets: $gitassets,
           "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
         }
-      ],
-      ["@semantic-release/gitlab", {
-        "assets": $glabassets,
-      }]
+      ]
     ])
   }
   ' | tee .releaserc

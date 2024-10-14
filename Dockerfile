@@ -7,7 +7,7 @@ USER releaser:releaser
 WORKDIR /home/releaser
 ENV NPM_CONFIG_PREFIX="/home/releaser/.npm-global"
 RUN mkdir $NPM_CONFIG_PREFIX
-RUN npm install --global semantic-release @semantic-release/exec @semantic-release/git @semantic-release/gitlab @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
+RUN npm install --global semantic-release @semantic-release/exec @semantic-release/git @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
 
 COPY scripts ./scripts
 COPY gitGlobalIgnore gitGlobalIgnore
