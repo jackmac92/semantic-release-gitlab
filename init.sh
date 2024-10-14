@@ -71,5 +71,5 @@ git checkout "$CI_COMMIT_REF_NAME"
 npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
 
 if git status -sb | grep -q ahead; then
-  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME"
+  git push "https://gitlab-ci-token:${GITLAB_TOKEN:-"${CI_JOB_TOKEN}"}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "$CI_COMMIT_REF_NAME" --push-option=ci.skip
 fi
