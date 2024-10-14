@@ -30,7 +30,7 @@ fi
 cd "$(git root-directory)"
 
 if [[ -f "./package.json" ]] && [[ -n "$(jq .release package.json)" ]]; then
-  echo "Using release config from package.json";
+  echo "Using release config from package.json"
 elif [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
@@ -70,4 +70,4 @@ fi
 # set -x
 
 echo "Running semantic release from $(pwd)"
-pnpm dlx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
+pnpm exec semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
