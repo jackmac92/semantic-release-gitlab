@@ -70,4 +70,4 @@ fi
 # set -x
 
 echo "Running semantic release from $(pwd)"
-pnpm exec semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}
+npx semantic-release ${SEMANTIC_RELEASE__COMMAND_FLAGS:-}

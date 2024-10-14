@@ -1,14 +1,12 @@
 FROM node:20
 
 RUN apt update -y && apt install -y git jq jo wget curl unzip python3 python3-toml python3-distutils python3-apt build-essential moreutils
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 RUN useradd releaser --home /home/releaser && mkdir /home/releaser && chown -R releaser:releaser /home/releaser
 USER releaser:releaser
 WORKDIR /home/releaser
-RUN pnpm add --glboal semantic-release @semantic-release/exec @semantic-release/git @semantic-release/gitlab @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
+RUN npm install --global semantic-release @semantic-release/exec @semantic-release/git @semantic-release/gitlab @semantic-release/commit-analyzer @semantic-release/npm @semantic-release/release-notes-generator
 
 COPY scripts ./scripts
 COPY gitGlobalIgnore gitGlobalIgnore
