@@ -31,7 +31,7 @@ cd "$(git root-directory)"
 
 if [[ -f "./package.json" ]] && [[ -n "$(jq .release package.json)" ]]; then
   echo "Using release config from package.json"
-elif [[ -n ${USE_DEFAULT_CONFIG:-""} ]]; then
+else
   echo "Using the following semantic release plugins..."
   echo "$SEM_BASE_PLUGINS"
   echo "Writing default config"
