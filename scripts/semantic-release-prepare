@@ -11,6 +11,16 @@ if [[ -f "./Cargo.toml" ]]; then
   git commit -m "chore: auto update cargo.toml version"
 fi
 
+if [[ -f "./deno.json" ]]; then
+  jq \
+    --arg newVersion "$VERSION_JUST_CREATED" \
+    '.version = $newVersion' \
+    deno.json |
+    sponge deno.json
+  git add deno.json
+  git commit -m "chore: auto update deno.json version"
+fi
+
 if [[ -f "./info.rkt" ]]; then
   cat info.rkt | sed -e 's|(define version.*|(define version "'"$VERSION_JUST_CREATED"'")|' | sponge info.rkt
   git add info.rkt
