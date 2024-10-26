@@ -29,7 +29,7 @@ fi
 
 cd "$(git root-directory)"
 
-if [[ -f "./package.json" ]] && [[ -n "$(jq .release package.json)" ]]; then
+if [[ -f "./package.json" ]] && jq --exit-status .release package.json >/dev/null; then
   echo "Using release config from package.json"
 else
   echo "Using the following semantic release plugins..."
