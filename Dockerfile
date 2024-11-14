@@ -7,6 +7,9 @@ RUN	useradd releaser --home /home/releaser \
 	&& chown -R releaser:releaser /home/releaser
 USER	releaser:releaser
 WORKDIR	/home/releaser
+RUN	curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=9.12.2 SHELL="$(which bash)" bash -
+ENV	PNPM_HOME	/home/releaser/.local/share/pnpm
+ENV	PATH	"${PNPM_HOME}:${PATH}"
 ENV	NPM_CONFIG_PREFIX	"/home/releaser/.npm-global"
 RUN	mkdir $NPM_CONFIG_PREFIX
 RUN	npm install --global semantic-release @semantic-release/exec @semantic-release/git @semantic-release/commit-analyzer @semantic-release/gitlab @semantic-release/npm @semantic-release/release-notes-generator
