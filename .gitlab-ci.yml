@@ -1,7 +1,7 @@
 include:
-  - project: 'quickstart-templates/ci-templates'
+  - project: "quickstart-templates/ci-templates"
     ref: master
-    file: 'docker-publish.yml'
+    file: "entrypoints/docker-image.yml"
 
 variables:
   IMAGE_NAME_PREFIX: jackzzz92/
